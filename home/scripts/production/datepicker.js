@@ -1,5 +1,5 @@
-import { loadStylesheet, loadScript } from 'https://supercharger-staging.vercel.app/utilities/external-script-loader.js';
-import { getSwiperInstance } from 'https://supercharger-staging.vercel.app/home/scripts/staging/swiper-order-form.js'; // Import the Swiper instance
+import { loadStylesheet, loadScript } from 'https://supercharger-dev.vercel.app/utilities/external-script-loader.js';
+import { getSwiperInstance } from 'https://supercharger-dev.vercel.app/home/scripts/staging/swiper-order-form.js'; // Import the Swiper instance
 
 console.log("Datepicker script initialized. Loading resources...");
 
