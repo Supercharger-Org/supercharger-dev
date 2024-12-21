@@ -14,7 +14,7 @@ function loadDynamicScript(src, callback, isModule = false) {
 }
 
 // Set the base URL explicitly
-const baseURL = "https://supercharger-staging.vercel.app/";
+const baseURL = "https://supercharger-dev.vercel.app/";
 
 // Check the hostname and load the appropriate script
 const origin = window.location.hostname;
