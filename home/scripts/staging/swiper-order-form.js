@@ -1,5 +1,5 @@
 // Define the base URL
-const BASE_URL = "https://supercharger-staging.vercel.app";
+const BASE_URL = "https://supercharger-dev.vercel.app";
 
 console.log(`Base URL is set to: ${BASE_URL}`);
 
