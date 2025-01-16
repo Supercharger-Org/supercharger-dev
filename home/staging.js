@@ -61,8 +61,8 @@ console.log('datepicker function is loaded');
 
 // DISABLES ALL THE OPTIONS ON THE SELECT AND PRESELECTS ONE OPTION
 // SELECTORS: wized=home_orderForm_jurisdictionSelect
-import 'https://supercharger-dev.vercel.app/home/scripts/staging/jurisdictions-select.js';
-console.log('jurisdictions select function is loaded');
+// import 'https://supercharger-dev.vercel.app/home/scripts/staging/jurisdictions-select.js';
+// console.log('jurisdictions select function is loaded');
 
 
 // HANDLES THE MULTISTEP SWIPER FORM NAVIGATION AND VALIDATION
