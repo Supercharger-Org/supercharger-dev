@@ -67,7 +67,7 @@ console.log('jurisdictions select function is loaded');
 // MARK SELECT FIELD AS "REQUIRED"
 // SELECTORS: wized=home_orderForm_jurisdictionSingleSelectWrapper, wized=home_orderForm_jurisdictionSingleSelect
 import 'https://supercharger-dev.vercel.app/home/scripts/staging/jurisdiction-single-select.js';
-console.log('jurisdictions select function is loaded');
+console.log('jurisdictions single select function is loaded');
 
 // HANDLES THE MULTISTEP SWIPER FORM NAVIGATION AND VALIDATION
 // SELECTORS: wized=home_orderForm_navigation_previous, wized="home_orderForm_navigation_next
