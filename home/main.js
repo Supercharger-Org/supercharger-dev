@@ -19,6 +19,6 @@ const baseURL = "https://supercharger-dev.vercel.app/";
 // Check the hostname and load the appropriate script
 const origin = window.location.hostname;
 
-loadDynamicScript(`${baseURL}home/production.js`, () => {
+loadDynamicScript(`${baseURL}home/staging.js`, () => {
 console.log("Loaded production script");
 }, true);
