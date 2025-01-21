@@ -1,4 +1,4 @@
-import { getSwiperInstance } from 'https://supercharger-dev.vercel.app/home/scripts/production/swiper-order-form.js';
+import { getSwiperInstance } from 'https://supercharger-dev.vercel.app/home/scripts/staging/swiper-order-form.js';
 
 console.log("Swiper navigation script with validation initialized.");
 
@@ -49,6 +49,34 @@ const validateRadios = (currentSlide) => {
   }
 };
 
+// Helper function to validate email format
+const isValidEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email format validation regex
+  return emailRegex.test(email);
+};
+
+// Validate email inputs
+const validateEmailInputs = (currentSlide) => {
+  const emailInputs = currentSlide.querySelectorAll("input[type='email'][required]");
+  let isValid = true;
+
+  emailInputs.forEach((input) => {
+    const errorElement = input.closest(".form-field_wrapper")?.querySelector(".form-field_error");
+    if (!input.value.trim() || !isValidEmail(input.value.trim())) {
+      if (errorElement) {
+        errorElement.removeAttribute("custom-cloak"); // Show error
+      }
+      isValid = false;
+    } else {
+      if (errorElement) {
+        errorElement.setAttribute("custom-cloak", "true"); // Hide error
+      }
+    }
+  });
+
+  return isValid;
+};
+
 // Validate text inputs
 const validateTextInputs = (currentSlide) => {
   const inputs = currentSlide.querySelectorAll("input[type='text'][required], input[type='email'][required], input[type='number'][required]");
@@ -79,13 +107,11 @@ const validateTextareas = (currentSlide) => {
   textareas.forEach((textarea) => {
     const errorElement = textarea.closest(".form-field_wrapper")?.querySelector(".form-field_error");
     if (!textarea.value.trim()) {
-      console.warn(`Validation failed for textarea with id "${textarea.id}".`);
       if (errorElement) {
         errorElement.removeAttribute("custom-cloak"); // Show error
       }
       isValid = false;
     } else {
-      console.log(`Textarea with id "${textarea.id}" is valid.`);
       if (errorElement) {
         errorElement.setAttribute("custom-cloak", "true"); // Hide error
       }
@@ -122,10 +148,11 @@ const validateCurrentSlide = (swiper) => {
   const currentSlide = swiper.slides[swiper.activeIndex];
   const isRadiosValid = validateFieldGroup("Radios", validateRadios, currentSlide);
   const isTextInputsValid = validateFieldGroup("Text Inputs", validateTextInputs, currentSlide);
+  const isEmailInputsValid = validateFieldGroup("Email Inputs", validateEmailInputs, currentSlide);
   const isTextareasValid = validateFieldGroup("Textareas", validateTextareas, currentSlide);
   const isSelectsValid = validateFieldGroup("Selects", validateSelectInputs, currentSlide);
 
-  const allValid = isRadiosValid && isTextInputsValid && isTextareasValid && isSelectsValid;
+  const allValid = isRadiosValid && isTextInputsValid && isEmailInputsValid && isTextareasValid && isSelectsValid;
   console.log(`Overall validation result for slide ${swiper.activeIndex + 1}: ${allValid}`);
   return allValid;
 };
