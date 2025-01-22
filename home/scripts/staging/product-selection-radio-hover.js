@@ -28,7 +28,7 @@ radioButtons.forEach((radioButton, index) => {
     radioButton.addEventListener('mouseenter', () => {
       try {
         // Check if the radio button is already selected
-        const isSelected = radioInput.classList.contains('w--redirected-checked');
+        const isSelected = radioInput.checked;
         if (!isSelected) {
           radioLabel.classList.add('is-active');
         }
@@ -41,7 +41,7 @@ radioButtons.forEach((radioButton, index) => {
     radioButton.addEventListener('mouseleave', () => {
       try {
         // Check if the radio button is selected
-        const isSelected = radioInput.classList.contains('w--redirected-checked');
+        const isSelected = radioInput.checked;
         if (!isSelected) {
           radioLabel.classList.remove('is-active');
         }
@@ -51,24 +51,30 @@ radioButtons.forEach((radioButton, index) => {
     });
 
     // Click event to handle selection
-    radioButton.addEventListener('click', () => {
+    radioButton.addEventListener('click', (event) => {
+      console.log(`Radio button ${index + 1} clicked.`);
+
+      // Prevent default container behavior
+      event.preventDefault();
+
       try {
-        // Remove 'is-active' class and uncheck all other radio inputs
+        // Ensure only the clicked radio input gets selected
         radioButtons.forEach((btn, btnIndex) => {
           const label = btn.querySelector('.product-selection_radio-label');
           const input = btn.querySelector('.product-selection_radio-select');
           if (label && input) {
-            label.classList.remove('is-active');
-            input.checked = false; // Uncheck other radio buttons
+            if (btn === radioButton) {
+              input.checked = true; // Select the clicked radio button
+              label.classList.add('is-active');
+              console.log(`Radio button ${index + 1} selected and is-active class added.`);
+            } else {
+              input.checked = false; // Deselect other radio buttons
+              label.classList.remove('is-active');
+            }
           } else {
             console.error(`Radio label or input not found for radio button ${btnIndex + 1} during click processing.`);
           }
         });
-
-        // Check the clicked radio input and add 'is-active' class to its label
-        radioInput.checked = true; // Programmatically select the radio input
-        radioLabel.classList.add('is-active');
-        console.log(`Radio button ${index + 1} selected and is-active class added.`);
       } catch (error) {
         console.error(`Error in click event for radio button ${index + 1}:`, error);
       }
