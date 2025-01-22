@@ -24,8 +24,10 @@ if (!radioButtons.length) {
 radioButtons.forEach((radioButton, index) => {
     const radioLabel = radioButton.querySelector('.product-selection_radio-label');
     const radioSelect = radioButton.querySelector('.product-selection_radio-select');
+    // Get the actual input radio element
+    const radioInput = radioButton.querySelector('input[type="radio"]');
 
-    if (!radioLabel || !radioSelect) {
+    if (!radioLabel || !radioSelect || !radioInput) {
         console.error(`Required elements not found for radio button ${index + 1}. Skipping.`);
         return;
     }
@@ -47,8 +49,7 @@ radioButtons.forEach((radioButton, index) => {
         // Click handler with debouncing
         let clickTimeout;
         radioButton.addEventListener('click', (event) => {
-            // Prevent any default behavior
-            event.preventDefault();
+            // Don't prevent default here to allow native radio behavior
             
             // Clear any pending click timeouts
             if (clickTimeout) {
@@ -62,21 +63,26 @@ radioButtons.forEach((radioButton, index) => {
                     if (currentlySelected) {
                         const prevLabel = currentlySelected.querySelector('.product-selection_radio-label');
                         const prevSelect = currentlySelected.querySelector('.product-selection_radio-select');
+                        const prevInput = currentlySelected.querySelector('input[type="radio"]');
                         if (prevLabel) prevLabel.classList.remove('is-active');
                         if (prevSelect) prevSelect.classList.remove('w--redirected-checked');
+                        if (prevInput) prevInput.checked = false;
                     }
 
                     // Set new selection
                     currentlySelected = radioButton;
                     radioLabel.classList.add('is-active');
                     radioSelect.classList.add('w--redirected-checked');
+                    radioInput.checked = true;
 
-                    // Dispatch a change event
-                    const changeEvent = new Event('change', {
-                        bubbles: true,
-                        cancelable: true
+                    // Dispatch both change and input events
+                    ['change', 'input'].forEach(eventType => {
+                        const event = new Event(eventType, {
+                            bubbles: true,
+                            cancelable: true
+                        });
+                        radioInput.dispatchEvent(event);
                     });
-                    radioSelect.dispatchEvent(changeEvent);
 
                 } catch (error) {
                     console.error(`Error in click handler for radio button ${index + 1}:`, error);
