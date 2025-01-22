@@ -19,7 +19,7 @@ Promise.all([
           display: none; /* Hide the default arrow icons */
         }
       `);
-      console.log("Custom styles for Swiper navigation buttons added successfully.");
+      //console.log("Custom styles for Swiper navigation buttons added successfully.");
     } catch (error) {
       console.error("Failed to add custom styles for Swiper navigation buttons:", error);
     }
@@ -29,7 +29,7 @@ Promise.all([
       loadStylesheet(
         "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css",
         () => {
-          console.log("Swiper CSS loaded!");
+          //console.log("Swiper CSS loaded!");
         }
       );
     } catch (error) {
@@ -41,7 +41,7 @@ Promise.all([
       loadScript(
         "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js",
         () => {
-          console.log("Swiper JS loaded!");
+          //console.log("Swiper JS loaded!");
 
           // Initialize Swiper
           try {
@@ -54,14 +54,14 @@ Promise.all([
               effect: 'fade',
             });
 
-            console.log("Swiper initialized successfully.");
+            //console.log("Swiper initialized successfully.");
 
             // Observe changes in the Swiper slides to adjust height dynamically
             const swiperSlides = document.querySelectorAll('.order-form_wrapper .swiper-slide');
             swiperSlides.forEach((slide, index) => {
-              console.log(`Setting up MutationObserver for slide ${index + 1}...`);
+              //console.log(`Setting up MutationObserver for slide ${index + 1}...`);
               const observer = new MutationObserver(() => {
-                console.log(`Changes detected in slide ${index + 1}. Updating Swiper height...`);
+                //console.log(`Changes detected in slide ${index + 1}. Updating Swiper height...`);
                 swiperInstance.updateAutoHeight(0); // Update Swiper height
               });
 
@@ -71,7 +71,7 @@ Promise.all([
                 subtree: true, // Watch all descendants
               });
 
-              console.log(`MutationObserver set up for slide ${index + 1}.`);
+              //console.log(`MutationObserver set up for slide ${index + 1}.`);
             });
           } catch (error) {
             console.error("Failed to initialize Swiper:", error);
