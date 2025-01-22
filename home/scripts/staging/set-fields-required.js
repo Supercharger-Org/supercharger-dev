@@ -28,7 +28,7 @@ window.Wized.push((Wized) => {
      * Function to initialize listeners for radio buttons with `required-fields` attribute.
      */
     const initializeRadioListeners = () => {
-        console.log("Initializing listeners for radio buttons with required-fields...");
+        //console.log("Initializing listeners for radio buttons with required-fields...");
 
         const radioButtons = document.querySelectorAll('label[required-fields]');
 
@@ -52,9 +52,9 @@ window.Wized.push((Wized) => {
             const wizedVariables = wizedVariablesAttr ? wizedVariablesAttr.split(',') : [];
 
             inputElement.addEventListener("change", () => {
-                console.log(`Radio button selected: ${inputElement.value}`);
-                console.log(`Required fields: ${requiredFields}`);
-                console.log(`Wized variables: ${wizedVariables}`);
+                //console.log(`Radio button selected: ${inputElement.value}`);
+                //console.log(`Required fields: ${requiredFields}`);
+                //console.log(`Wized variables: ${wizedVariables}`);
 
                 // Ensure the clicked radio button gets the proper class
                 const radioSelect = radioLabel.querySelector(".w-radio-input");
@@ -70,7 +70,7 @@ window.Wized.push((Wized) => {
                     previouslySelectedFields.forEach((field) => {
                         const targetElement = document.querySelector(`[wized="${field.trim()}"]`);
                         if (targetElement) {
-                            console.log(`Resetting and marking field as NOT required: ${field}`);
+                            //console.log(`Resetting and marking field as NOT required: ${field}`);
                             targetElement.removeAttribute("required");
 
                             // Reset the field based on its type
@@ -92,7 +92,7 @@ window.Wized.push((Wized) => {
                 if (previouslySelectedVariables.length > 0) {
                     previouslySelectedVariables.forEach((variable) => {
                         if (variable.trim()) {
-                            console.log(`Resetting previously selected Wized variable: ${variable}`);
+                            //console.log(`Resetting previously selected Wized variable: ${variable}`);
                             Wized.data.v[variable.trim()] = null;
                         }
                     });
@@ -102,7 +102,7 @@ window.Wized.push((Wized) => {
                 requiredFields.forEach((field) => {
                     const targetElement = document.querySelector(`[wized="${field.trim()}"]`);
                     if (targetElement) {
-                        console.log(`Marking field as required: ${field}`);
+                        //console.log(`Marking field as required: ${field}`);
                         targetElement.setAttribute("required", "true");
 
                         // Reset the field based on its type
@@ -128,7 +128,7 @@ window.Wized.push((Wized) => {
                 // Reset the Wized variables for the current radio option
                 wizedVariables.forEach((variable) => {
                     if (variable.trim()) {
-                        console.log(`Resetting Wized variable: ${variable}`);
+                        //console.log(`Resetting Wized variable: ${variable}`);
                         Wized.data.v[variable.trim()] = null;
                     }
                 });
@@ -140,13 +140,13 @@ window.Wized.push((Wized) => {
      * Reinitialize listeners when new elements are added to the DOM.
      */
     Wized.on("request", (event) => {
-        console.log("Reinitializing radio listeners after Wized request...");
+        //console.log("Reinitializing radio listeners after Wized request...");
         setTimeout(() => {
             initializeRadioListeners();
         }, 100); // Delay to ensure DOM updates are complete
     });
 
     // Initial setup
-    console.log("Setting up initial radio listeners...");
+    //console.log("Setting up initial radio listeners...");
     initializeRadioListeners();
 });
