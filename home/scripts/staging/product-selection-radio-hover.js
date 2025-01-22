@@ -40,21 +40,22 @@ radioButtons.forEach((radioButton, index) => {
 
     // Click event to handle selection
     radioButton.addEventListener('click', (event) => {
-      // Prevent default action for container click to avoid issues
+      // Prevent default container behavior if necessary
       event.preventDefault();
 
       try {
-        // Check the associated input explicitly
-        radioInput.checked = true;
+        // Ensure the radio input gets selected
+        if (!radioInput.checked) {
+          radioInput.checked = true;
+          radioInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
 
-        // Remove 'is-active' class from all other labels
+        // Remove 'is-active' class from all labels
         radioButtons.forEach((btn, btnIndex) => {
           const label = btn.querySelector('.product-selection_radio-label');
           const input = btn.querySelector('.product-selection_radio-select');
           if (label && input) {
-            if (input !== radioInput) {
-              label.classList.remove('is-active');
-            }
+            label.classList.remove('is-active');
           } else {
             console.error(`Radio label or input not found for radio button ${btnIndex + 1} during click processing.`);
           }
