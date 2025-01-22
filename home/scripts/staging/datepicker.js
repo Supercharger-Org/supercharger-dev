@@ -36,7 +36,7 @@ loadScript("https://cdn.jsdelivr.net/npm/flatpickr", () => {
         return;
       }
 
-      console.log("Active slide detected. HTML content:", activeSlide.innerHTML);
+      //console.log("Active slide detected. HTML content:", activeSlide.innerHTML);
 
       // Look for the inputs inside the active slide
       const dateInput = activeSlide.querySelector("[wized='home_orderForm_date_input']");
