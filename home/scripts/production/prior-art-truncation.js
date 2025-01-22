@@ -73,7 +73,6 @@ const processElements = (contentSelector, linkSelector, logLabel) => {
 
                 currentState.expanded = !currentState.expanded;
                 state.set(content, currentState);
-                console.log(`Updated state for ${logLabel} at index ${index}:`, currentState);
             });
         }
     });
@@ -98,12 +97,10 @@ export const initializeTruncationListeners = () => {
 // Wrap the initialization for Wized
 window.Wized = window.Wized || [];
 window.Wized.push((Wized) => {
-    console.log("Setting up initial truncation listeners...");
     initializeTruncationListeners();
 
     Wized.on("request", (event) => {
         if (event.name === "searchByPatentNumber3") {
-            console.log("Detected execution of searchByPatentNumber3 request. Reinitializing truncation listeners...");
             setTimeout(() => {
                 initializeTruncationListeners();
             }, 100);
