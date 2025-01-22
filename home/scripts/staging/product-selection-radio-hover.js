@@ -11,12 +11,10 @@ if (!radioButtons.length) {
 radioButtons.forEach((radioButton, index) => {
   //console.log(`Adding listeners to radio button ${index + 1}.`);
 
-  // Get the label and input elements inside the current radio button
+  // Get the label element inside the current radio button
   const radioLabel = radioButton.querySelector('.product-selection_radio-label');
-  const radioInput = radioButton.querySelector('.product-selection_radio-select');
-
-  if (!radioLabel || !radioInput) {
-    console.error(`Radio label or input not found for radio button ${index + 1}. Skipping this button.`);
+  if (!radioLabel) {
+    console.error(`Radio label not found for radio button ${index + 1}. Skipping this button.`);
     return; // Skip further processing for this button
   }
 
@@ -26,10 +24,13 @@ radioButtons.forEach((radioButton, index) => {
 
     // Mouseenter (hover) event
     radioButton.addEventListener('mouseenter', () => {
+      //console.log(`Mouse entered radio button ${index + 1}.`);
+      
       try {
         // Check if the radio button is already selected
-        const isSelected = radioInput.checked;
+        const isSelected = radioButton.querySelector('.product-selection_radio-select').classList.contains('w--redirected-checked');
         if (!isSelected) {
+          //console.log(`Radio button ${index + 1} is not selected. Adding is-active class.`);
           radioLabel.classList.add('is-active');
         }
       } catch (error) {
@@ -39,10 +40,13 @@ radioButtons.forEach((radioButton, index) => {
 
     // Mouseleave event
     radioButton.addEventListener('mouseleave', () => {
+      //console.log(`Mouse left radio button ${index + 1}.`);
+
       try {
         // Check if the radio button is selected
-        const isSelected = radioInput.checked;
+        const isSelected = radioButton.querySelector('.product-selection_radio-select').classList.contains('w--redirected-checked');
         if (!isSelected) {
+          //console.log(`Removing is-active class from radio button ${index + 1}.`);
           radioLabel.classList.remove('is-active');
         }
       } catch (error) {
@@ -51,30 +55,24 @@ radioButtons.forEach((radioButton, index) => {
     });
 
     // Click event to handle selection
-    radioButton.addEventListener('click', (event) => {
-      console.log(`Radio button ${index + 1} clicked.`);
-
-      // Prevent default container behavior
-      event.preventDefault();
+    radioButton.addEventListener('click', () => {
+      //console.log(`Radio button ${index + 1} clicked.`);
 
       try {
-        // Ensure only the clicked radio input gets selected
+        // Remove 'is-active' class from all labels
         radioButtons.forEach((btn, btnIndex) => {
           const label = btn.querySelector('.product-selection_radio-label');
-          const input = btn.querySelector('.product-selection_radio-select');
-          if (label && input) {
-            if (btn === radioButton) {
-              input.checked = true; // Select the clicked radio button
-              label.classList.add('is-active');
-              console.log(`Radio button ${index + 1} selected and is-active class added.`);
-            } else {
-              input.checked = false; // Deselect other radio buttons
-              label.classList.remove('is-active');
-            }
+          if (label) {
+            label.classList.remove('is-active');
+            //console.log(`Removed is-active from radio button ${btnIndex + 1}.`);
           } else {
-            console.error(`Radio label or input not found for radio button ${btnIndex + 1} during click processing.`);
+            console.error(`Radio label not found for radio button ${btnIndex + 1} during click processing.`);
           }
         });
+
+        // Add 'is-active' class to the clicked button's label
+        radioLabel.classList.add('is-active');
+        //console.log(`Added is-active to radio button ${index + 1}.`);
       } catch (error) {
         console.error(`Error in click event for radio button ${index + 1}:`, error);
       }
