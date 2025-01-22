@@ -14,7 +14,6 @@ window.Wized.push((Wized) => {
                 return;
             }
 
-            console.log(`Extracted publication_number: ${publicationNumber}`);
 
             // Access the Wized variable
             let selectedPatents = Wized.data.v.home_orderForm_priorArtPreview_selectedPatents;
@@ -28,7 +27,6 @@ window.Wized.push((Wized) => {
             // Check if the publication_number already exists in the array
             const exists = selectedPatents.some((patent) => patent.publication_number === publicationNumber);
             if (!exists) {
-                console.log("Adding new data to the selectedPatents array:", result.data);
                 selectedPatents.push(result.data);
             } else {
                 console.warn(`Duplicate detected. Skipping data with publication_number: ${publicationNumber}`);
@@ -48,7 +46,6 @@ window.Wized.push((Wized) => {
      */
     Wized.on("request", (event) => {
         if (event.name === "searchByPatentNumber3") {
-            console.log("Detected execution of searchByPatentNumber3 request:", event);
             if (event.ok && event.data) {
                 updateSelectedPatents(event);
             } else {
@@ -57,5 +54,4 @@ window.Wized.push((Wized) => {
         }
     });
 
-    console.log("Listener for searchByPatentNumber3 request has been set up.");
 });
