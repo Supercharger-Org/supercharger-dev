@@ -53,10 +53,7 @@ radioButtons.forEach((radioButton, index) => {
         // Ensure the radio input gets selected
         if (!radioInput.checked) {
           radioInput.checked = true;
-          radioInput.dispatchEvent(new Event('change', { bubbles: true }));
           console.log(`Radio button ${index + 1}: input checked.`);
-        } else {
-          console.log(`Radio button ${index + 1}: input was already checked.`);
         }
 
         // Remove 'is-active' class from all labels
@@ -66,8 +63,6 @@ radioButtons.forEach((radioButton, index) => {
           if (label && input) {
             label.classList.remove('is-active');
             console.log(`Radio button ${btnIndex + 1}: removed 'is-active' class.`);
-          } else {
-            console.error(`Radio label or input not found for radio button ${btnIndex + 1} during click processing.`);
           }
         });
 
