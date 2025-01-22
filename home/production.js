@@ -64,8 +64,13 @@ console.log('datepicker function is loaded');
 import 'https://supercharger-dev.vercel.app/home/scripts/production/jurisdictions-select.js';
 console.log('jurisdictions select function is loaded');
 
+// MARK SELECT FIELD AS "REQUIRED"
+// SELECTORS: wized=home_orderForm_jurisdictionSingleSelectWrapper, wized=home_orderForm_jurisdictionSingleSelect
+import 'https://supercharger-dev.vercel.app/home/scripts/production/jurisdiction-single-select.js';
+console.log('jurisdictions single select function is loaded');
 
 // HANDLES THE MULTISTEP SWIPER FORM NAVIGATION AND VALIDATION
 // SELECTORS: wized=home_orderForm_navigation_previous, wized="home_orderForm_navigation_next
 import 'https://supercharger-dev.vercel.app/home/scripts/production/order-form-validation-navigation.js';
 console.log('Order form validation & navigation is loaded');
+
