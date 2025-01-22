@@ -5,7 +5,6 @@ window.Wized.push((Wized) => {
      * @param {string} newPublicationNumber - The new publication_number to add.
      */
     const updateSelectedPatentsInput = (newPublicationNumber) => {
-        console.log(`Adding publication_number: ${newPublicationNumber} to the input...`);
 
         // Target the input element
         const inputElement = document.querySelector('[wized="home_orderForm_selectedPatentsInput"]');
@@ -34,7 +33,6 @@ window.Wized.push((Wized) => {
             const event = new Event("input", { bubbles: true });
             inputElement.dispatchEvent(event);
 
-            console.log(`Updated input value: ${updatedValue}`);
         } else {
             console.warn(`Publication_number: ${newPublicationNumber} is already present in the input.`);
         }
@@ -45,13 +43,11 @@ window.Wized.push((Wized) => {
      */
     Wized.on("request", (event) => {
         if (event.name === "searchByPatentNumber3") {
-            console.log("Detected execution of searchByPatentNumber3 request.");
 
             // Grab the publication_number from the request result
             const publicationNumber = event.data?.publication_number;
 
             if (publicationNumber) {
-                console.log(`Extracted publication_number: ${publicationNumber}`);
                 updateSelectedPatentsInput(publicationNumber);
             } else {
                 console.error("No publication_number found in the request response.");
@@ -59,5 +55,4 @@ window.Wized.push((Wized) => {
         }
     });
 
-    console.log("Listener for searchByPatentNumber3 request has been set up.");
 });
