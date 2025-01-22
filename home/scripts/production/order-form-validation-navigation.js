@@ -1,23 +1,18 @@
 import { getSwiperInstance } from 'https://supercharger-dev.vercel.app/home/scripts/staging/swiper-order-form.js';
 
-console.log("Swiper navigation script with validation initialized.");
 
 const waitForSwiper = () => {
   const swiper = getSwiperInstance();
   if (swiper) {
-    console.log("Swiper instance found. Proceeding with navigation and validation setup...");
     setupNavigation(swiper);
   } else {
-    console.log("Swiper instance not ready yet. Retrying...");
     setTimeout(waitForSwiper, 500); // Retry after 500ms
   }
 };
 
 // Helper to validate and log results
 const validateFieldGroup = (groupName, validator, currentSlide) => {
-  console.log(`Validating ${groupName}...`);
   const result = validator(currentSlide);
-  console.log(`${groupName} validation result: ${result}`);
   return result;
 };
 
@@ -26,7 +21,6 @@ const validateRadios = (currentSlide) => {
   const radios = currentSlide.querySelectorAll("input[type='radio']");
   
   if (radios.length === 0) {
-    console.log("No radios found on this slide. Skipping radio validation.");
     return true; // No radios to validate, return true
   }
 
@@ -158,7 +152,6 @@ const validateCurrentSlide = (swiper) => {
 };
 
 const setupNavigation = (swiper) => {
-  console.log("Setting up navigation and validation handlers...");
 
   // Add event listener for "next" buttons
   document.querySelectorAll('[wized="home_orderForm_navigation_next"]').forEach((nextButton) => {
@@ -166,7 +159,6 @@ const setupNavigation = (swiper) => {
       if (validateCurrentSlide(swiper)) {
         if (swiper.activeIndex < swiper.slides.length - 1) {
           swiper.slideNext();
-          console.log(`Navigated to slide ${swiper.activeIndex + 2}.`);
           swiper.updateAutoHeight(); // Ensure the height adjusts after moving to the next slide
         } else {
           console.warn("Already on the last slide.");
@@ -182,7 +174,6 @@ const setupNavigation = (swiper) => {
     prevButton.addEventListener('click', () => {
       if (swiper.activeIndex > 0) {
         swiper.slidePrev();
-        console.log(`Navigated to slide ${swiper.activeIndex}.`);
         swiper.updateAutoHeight(); // Ensure the height adjusts after moving to the previous slide
       } else {
         console.warn("Already on the first slide.");
@@ -192,7 +183,6 @@ const setupNavigation = (swiper) => {
 
   // Adjust height on slide change
   swiper.on('slideChange', () => {
-    console.log("Slide changed. Updating height...");
     swiper.updateAutoHeight(); // Automatically adjust height when the active slide changes
   });
 
@@ -201,13 +191,11 @@ const setupNavigation = (swiper) => {
     field.addEventListener('input', () => { // Use 'input' for real-time updates
       const errorElement = field.closest(".form-field_wrapper")?.querySelector(".form-field_error");
       if (errorElement && field.value.trim() !== "") {
-        console.log(`Error hidden for field with id "${field.id}".`);
         errorElement.setAttribute("custom-cloak", "true"); // Hide error on change
       }
     });
   });
 
-  console.log("Navigation and validation handlers attached successfully.");
 };
 
 // Wait for Swiper instance to be ready
