@@ -13,75 +13,92 @@ window.Wized.push((Wized) => {
                 return;
             }
 
-            if (!button.dataset.listenerAttached) {
-                console.log(`Attaching listener to button with publication-number: ${publicationNumber}`);
+            // Remove old listener if it exists to prevent duplicates
+            const oldListener = button.getAttribute('data-click-listener');
+            if (oldListener) {
+                button.removeEventListener('click', window[oldListener]);
+            }
 
-                button.addEventListener("click", () => {
-                    console.log(`Remove button clicked for publication-number: ${publicationNumber}`);
+            // Create a new listener function
+            const listenerFunction = () => {
+                console.log(`Remove button clicked for publication-number: ${publicationNumber}`);
 
-                    let selectedPatents = Wized.data.v.home_orderForm_priorArtPreview_selectedPatents;
+                // Get the current patents array
+                let selectedPatents = Wized.data.v.home_orderForm_priorArtPreview_selectedPatents;
+                console.log('Current selected patents:', selectedPatents);
 
-                    if (!Array.isArray(selectedPatents)) {
-                        console.error("home_orderForm_priorArtPreview_selectedPatents is not an array. Cannot proceed with removal.");
-                        return;
-                    }
+                if (!Array.isArray(selectedPatents)) {
+                    console.error("home_orderForm_priorArtPreview_selectedPatents is not an array. Converting to array.");
+                    selectedPatents = selectedPatents ? [selectedPatents] : [];
+                }
 
-                    const initialLength = selectedPatents.length;
-                    selectedPatents = selectedPatents.filter(
-                        (patent) => patent["publication_number"] !== publicationNumber
-                    );
-
-                    if (selectedPatents.length < initialLength) {
-                        console.log(`Removed object with publication-number: ${publicationNumber}`);
-                    } else {
-                        console.warn(`No matching object found for publication-number: ${publicationNumber}`);
-                    }
-
-                    Wized.data.v.home_orderForm_priorArtPreview_selectedPatents = selectedPatents;
-                    console.log("Updated home_orderForm_priorArtPreview_selectedPatents variable:", selectedPatents);
-
-                    // Update the input field
-                    const inputField = document.querySelector('[wized="home_orderForm_selectedPatentsInput"]');
-                    if (inputField) {
-                        console.log(`Original input value: "${inputField.value}"`);
-
-                        // Remove the publication number from the input field
-                        const updatedInputValue = inputField.value
-                            .split(', ')
-                            .filter((value) => value !== publicationNumber)
-                            .join(', ');
-
-                        inputField.value = updatedInputValue;
-                        console.log(`Updated input value: "${updatedInputValue}"`);
-
-                        // Trigger an input event to notify Wized of the change
-                        const event = new Event('input', { bubbles: true });
-                        inputField.dispatchEvent(event);
-                        console.log("Dispatched input event for updated input field.");
-                    } else {
-                        console.warn('Input field with attribute wized="home_orderForm_selectedPatentsInput" not found.');
-                    }
-
-                    // Reinitialize truncation listeners
-                    console.log("Reinitializing truncation listeners...");
-                    initializeTruncationListeners();
+                const initialLength = selectedPatents.length;
+                
+                // Filter out the patent to be removed
+                selectedPatents = selectedPatents.filter(patent => {
+                    const currentPubNumber = patent["publication_number"];
+                    console.log(`Comparing ${currentPubNumber} with ${publicationNumber}`);
+                    return currentPubNumber !== publicationNumber;
                 });
 
-                button.dataset.listenerAttached = true;
-            }
+                if (selectedPatents.length < initialLength) {
+                    console.log(`Successfully removed patent with publication-number: ${publicationNumber}`);
+                } else {
+                    console.warn(`No matching patent found for publication-number: ${publicationNumber}`);
+                }
+
+                // Update Wized variable with modified array
+                console.log('Updating selected patents to:', selectedPatents);
+                Wized.data.v.home_orderForm_priorArtPreview_selectedPatents = selectedPatents;
+
+                // Update the input field
+                const inputField = document.querySelector('[wized="home_orderForm_selectedPatentsInput"]');
+                if (inputField) {
+                    console.log(`Original input value: "${inputField.value}"`);
+
+                    const updatedInputValue = inputField.value
+                        .split(', ')
+                        .filter((value) => value !== publicationNumber)
+                        .join(', ');
+
+                    inputField.value = updatedInputValue;
+                    console.log(`Updated input value: "${updatedInputValue}"`);
+
+                    // Trigger input event
+                    const event = new Event('input', { bubbles: true });
+                    inputField.dispatchEvent(event);
+                    console.log("Dispatched input event");
+                } else {
+                    console.warn('Input field not found');
+                }
+
+                // Reinitialize truncation
+                console.log("Reinitializing truncation listeners...");
+                initializeTruncationListeners();
+            };
+
+            // Store the listener function and add it to the button
+            const functionName = `removeListener_${publicationNumber.replace(/[^a-zA-Z0-9]/g, '_')}`;
+            window[functionName] = listenerFunction;
+            button.setAttribute('data-click-listener', functionName);
+            button.addEventListener('click', listenerFunction);
+            
+            console.log(`Attached new listener to button with publication-number: ${publicationNumber}`);
         });
     };
 
-    Wized.on("request", (event) => {
-        if (event.name === "searchByPatentNumber3") {
-            console.log("Detected execution of searchByPatentNumber3 request. Reinitializing remove listeners...");
+    // Listen for the searchByPatentNumber3 request
+    Wized.on("requestend", (result) => {
+        if (result.name === "searchByPatentNumber3") {
+            console.log("SearchByPatentNumber3 request completed. Setting up listeners...");
+            // Add a small delay to ensure DOM is updated
             setTimeout(() => {
                 initializeRemoveListeners();
-            }, 100);
+            }, 200);
         }
     });
 
+    // Set up initial listeners
     console.log("Setting up initial remove listeners...");
     initializeRemoveListeners();
 });
-
