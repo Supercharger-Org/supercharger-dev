@@ -19,8 +19,8 @@ console.log('Search add patent function is loaded');
 // SET WIZED VARIABLE WHEN WIZED REQUEST HAS BEEN EXECUTED SUCCESSFULLY
 // WIZED VARIABLE: home_orderForm_priorArtPreview_selectedPatents
 // WIZED REQUEST: searchByPatentNumber3
-import 'https://supercharger-dev.vercel.app/home/scripts/staging/prior-art-preview-set-variable.js';
-console.log('Set Prior art Preview variable function is loaded');
+// import 'https://supercharger-dev.vercel.app/home/scripts/staging/prior-art-preview-set-variable.js';
+// console.log('Set Prior art Preview variable function is loaded');
 
 
 // TRUNCATE TEXT, "VIEW MORE" "VIEW LESS" FUNCTIONALITY ADDED TO LINKS IN PRIOR ART UI CARDS
