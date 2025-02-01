@@ -73,3 +73,31 @@ console.log('jurisdictions single select function is loaded');
 // SELECTORS: wized=home_orderForm_navigation_previous, wized="home_orderForm_navigation_next
 import 'https://supercharger-dev.vercel.app/home/scripts/staging/order-form-validation-navigation.js';
 console.log('Order form validation & navigation is loaded');
+
+// SETS WIZED VARIABLE
+// WIZED VARIABLE SELECTORS: v.home_orderForm_priorArtPreview_selectedPatents,v.home_orderForm_priorArtPreview_claims
+// WIZED REQUEST: searchByPatentNumber3
+import 'https://supercharger-dev.vercel.app/home/scripts/staging/claim-set-variable.js';
+console.log('Claim set variable is loaded');
+
+// UPDATE WIZED VARIABLE
+// WIZED SELECTOR: wized=home_orderForm_priorArtPreview_claimCheckbox, 
+// WIZED VARIABLE SELECTORS: v.home_orderForm_priorArtPreview_claims
+// WIZED REQUEST: searchByPatentNumber3
+import 'https://supercharger-dev.vercel.app/home/scripts/staging/claim-update-variable.js';
+console.log('Claim update variable is loaded');
+
+// CHECKBOX ARE CHECKED BY DEFAULT
+// WIZED SELECTOR: home_orderForm_priorArtPreview_claimCheckbox, 
+import 'https://supercharger-dev.vercel.app/home/scripts/staging/claims-checkbox-checked.js';
+console.log('Claim checkbox checked is loaded');
+
+// MARK TEXT AREA FIELD AS REQUIRED
+// WIZED SELECTOR: demo_patentDescription_fileUpload_instructionsInput, 
+import 'https://supercharger-dev.vercel.app/home/scripts/staging/instruction-input-required.js';
+console.log('insutruction input is required is loaded');
+
+// MARK INPUT FIELD AS REQUIRED
+// WIZED SELECTOR: home_orderForm_selectedPatentsInput, 
+import 'https://supercharger-dev.vercel.app/home/scripts/staging/patent-input-required.js';
+console.log('patent input required is loaded');
