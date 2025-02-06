@@ -23,30 +23,39 @@ const validateFieldGroup = (groupName, validator, currentSlide) => {
 
 // Validate radio inputs
 const validateRadios = (currentSlide) => {
-  const radios = currentSlide.querySelectorAll("input[type='radio']");
+  const radioGroups = currentSlide.querySelectorAll(".flex-horizontal.align-left-center.gap-8px");
   
-  if (radios.length === 0) {
-    //console.log("No radios found on this slide. Skipping radio validation.");
-    return true; // No radios to validate, return true
+  if (radioGroups.length === 0) {
+    return true; // No radio groups to validate, return true
   }
 
-  const isRadioChecked = Array.from(radios).some((radio) => {
-    const parentLabel = radio.closest("label");
-    return parentLabel && parentLabel.querySelector(".w-radio-input").classList.contains("w--redirected-checked");
+  let isValid = true;
+
+  radioGroups.forEach((radioGroup) => {
+    const radios = radioGroup.querySelectorAll("input[type='radio']");
+    if (radios.length === 0) return; // Skip if no radios in this group
+
+    const isRadioChecked = Array.from(radios).some((radio) => {
+      const parentLabel = radio.closest("label");
+      return parentLabel && parentLabel.querySelector(".w-radio-input").classList.contains("w--redirected-checked");
+    });
+
+    // Find the error element within the parent wrapper of the radio group
+    const errorElement = radioGroup.closest(".form-field_wrapper")?.querySelector(".form-field_error");
+    
+    if (!isRadioChecked) {
+      if (errorElement) {
+        errorElement.removeAttribute("custom-cloak"); // Show error
+      }
+      isValid = false;
+    } else {
+      if (errorElement) {
+        errorElement.setAttribute("custom-cloak", "true"); // Hide error
+      }
+    }
   });
 
-  const errorElement = currentSlide.querySelector(".form-field_error");
-  if (!isRadioChecked) {
-    if (errorElement) {
-      errorElement.removeAttribute("custom-cloak"); // Show error
-    }
-    return false;
-  } else {
-    if (errorElement) {
-      errorElement.setAttribute("custom-cloak", "true"); // Hide error
-    }
-    return true;
-  }
+  return isValid;
 };
 
 // Helper function to validate email format
