@@ -1,11 +1,29 @@
-// Import loading functions from external file
+// Import loading functions and custom CSS function
 import { loadStylesheet, loadScript } from 'https://supercharger-dev.vercel.app/utilities/external-script-loader.js';
+import { addCustomStyles } from 'https://supercharger-dev.vercel.app/utilities/custom-css.js';
 
 // Initialize Wized
 window.Wized = window.Wized || [];
 window.Wized.push((Wized) => {
   // Store the selectize instance globally so we can access it in the watcher
   let selectizeInstance;
+
+  // Custom CSS for Selectize styling
+  const customSelectizeCSS = `
+    .selectize-control.multi .selectize-input [data-value] {
+      background-color: #3532b5;
+      background-image: linear-gradient(to bottom, #ffffff00, #ffffff00);
+    }
+    .selectize-control.plugin-remove_button .item .remove {
+      border-left: 1px solid #cacaca;
+    }
+    .selectize-dropdown .selected {
+      background-color: #3431b5;
+    }
+    .selectize-control.multi .selectize-input>div {
+      border: 0px solid #ffffff00;
+    }
+  `;
 
   // Function to initialize Selectize
   const initializeSelectize = (element) => {
@@ -93,7 +111,10 @@ window.Wized.push((Wized) => {
 
   // Load CSS first
   loadStylesheet(selectizeCSS, () => {
-    // After CSS is loaded, load the JS
+    // After default CSS is loaded, add our custom CSS
+    addCustomStyles(customSelectizeCSS);
+    
+    // Then load the JS
     loadScript(selectizeJS, () => {
       // After both resources are loaded, set up the jurisdiction element
       setupJurisdictionElement();
