@@ -101,3 +101,15 @@ console.log('insutruction input is required is loaded');
 // WIZED SELECTOR: home_orderForm_selectedPatentsInput, 
 import 'https://supercharger-dev.vercel.app/home/scripts/staging/patent-input-required.js';
 console.log('patent input required is loaded');
+
+// INITIALISE SELECTIZE JS WHEN "PRODUCT INFRINGEMENT IS SELECTED" ON JURISDICTION SELECT INPUT
+// WIZED SELECTOR: home_orderForm_infringementJurisdictionSelect
+// WIZED VARIABLE: home_orderForm_infringementJurisdictionSelect_options
+import 'https://supercharger-dev.vercel.app/home/scripts/staging/infringement-jurisdiction-select.js';
+console.log('Infringement Jurisdiction is loaded');
+
+// INITIALISE SELECTIZE JS WHEN "PRODUCT INFRINGEMENT IS SELECTED" ON JURISDICTION SELECT INPUT
+// WIZED SELECTOR: home_orderForm_infringementJurisdictionSelect
+// WIZED VARIABLE: home_orderForm_infringementJurisdictionSelect_options
+import 'https://supercharger-dev.vercel.app/home/scripts/staging/search-time-period.js';
+console.log('Search Time Period is loaded');
