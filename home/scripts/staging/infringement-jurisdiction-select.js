@@ -1,5 +1,5 @@
 // Import loading functions from external file
-import { loadStylesheet, loadScript } from './external-script-loader.js';
+import { loadStylesheet, loadScript } from 'https://supercharger-dev.vercel.app/utilities/external-script-loader.js';
 
 // Initialize Wized
 window.Wized = window.Wized || [];
