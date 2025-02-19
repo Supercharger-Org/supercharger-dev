@@ -157,10 +157,8 @@ const setupNavigation = (swiper) => {
   const scrollToTop = () => {
     if (formElement) {
       formElement.scrollIntoView({ behavior: "smooth", block: "start" });
-      console.log("Scrolling to top.");
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
-      console.log("Can't scroll.");
     }
   };
 
