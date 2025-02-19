@@ -156,7 +156,7 @@ const setupNavigation = (swiper) => {
 
   const scrollToTop = () => {
     if (formElement) {
-      const offset = 300; // Adjust scroll position above the element
+      const offset = 150; // Adjust scroll position above the element
       const elementPosition = formElement.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({ top: elementPosition - offset, behavior: "smooth" });
     } else {
