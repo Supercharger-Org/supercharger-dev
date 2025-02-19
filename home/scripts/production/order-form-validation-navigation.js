@@ -152,14 +152,23 @@ const validateCurrentSlide = (swiper) => {
 };
 
 const setupNavigation = (swiper) => {
+  const formElement = document.querySelector('.order-form_wrapper');
 
-  // Add event listener for "next" buttons
+  const scrollToTop = () => {
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
   document.querySelectorAll('[wized="home_orderForm_navigation_next"]').forEach((nextButton) => {
     nextButton.addEventListener('click', () => {
       if (validateCurrentSlide(swiper)) {
         if (swiper.activeIndex < swiper.slides.length - 1) {
           swiper.slideNext();
-          swiper.updateAutoHeight(); // Ensure the height adjusts after moving to the next slide
+          swiper.updateAutoHeight();
+          scrollToTop(); // Scroll to top after navigating
         } else {
           console.warn("Already on the last slide.");
         }
@@ -169,33 +178,30 @@ const setupNavigation = (swiper) => {
     });
   });
 
-  // Add event listener for "previous" buttons
   document.querySelectorAll('[wized="home_orderForm_navigation_previous"]').forEach((prevButton) => {
     prevButton.addEventListener('click', () => {
       if (swiper.activeIndex > 0) {
         swiper.slidePrev();
-        swiper.updateAutoHeight(); // Ensure the height adjusts after moving to the previous slide
+        swiper.updateAutoHeight();
+        scrollToTop(); // Scroll to top after navigating
       } else {
         console.warn("Already on the first slide.");
       }
     });
   });
 
-  // Adjust height on slide change
   swiper.on('slideChange', () => {
-    swiper.updateAutoHeight(); // Automatically adjust height when the active slide changes
+    swiper.updateAutoHeight();
   });
 
-  // Add event listener for all inputs to hide error message on interaction
   document.querySelectorAll("input[type='radio'], input[type='text'], textarea, select").forEach((field) => {
-    field.addEventListener('input', () => { // Use 'input' for real-time updates
+    field.addEventListener('input', () => {
       const errorElement = field.closest(".form-field_wrapper")?.querySelector(".form-field_error");
       if (errorElement && field.value.trim() !== "") {
-        errorElement.setAttribute("custom-cloak", "true"); // Hide error on change
+        errorElement.setAttribute("custom-cloak", "true");
       }
     });
   });
-
 };
 
 // Wait for Swiper instance to be ready
