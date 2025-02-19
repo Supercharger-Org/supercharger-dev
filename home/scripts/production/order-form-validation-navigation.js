@@ -156,7 +156,9 @@ const setupNavigation = (swiper) => {
 
   const scrollToTop = () => {
     if (formElement) {
-      formElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      const offset = 300; // Adjust scroll position above the element
+      const elementPosition = formElement.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: elementPosition - offset, behavior: "smooth" });
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -168,7 +170,7 @@ const setupNavigation = (swiper) => {
         if (swiper.activeIndex < swiper.slides.length - 1) {
           swiper.slideNext();
           swiper.updateAutoHeight();
-          scrollToTop(); // Scroll to top after navigating
+          scrollToTop(); // Scroll up after navigation
         } else {
           console.warn("Already on the last slide.");
         }
@@ -183,7 +185,7 @@ const setupNavigation = (swiper) => {
       if (swiper.activeIndex > 0) {
         swiper.slidePrev();
         swiper.updateAutoHeight();
-        scrollToTop(); // Scroll to top after navigating
+        scrollToTop(); // Scroll up after navigation
       } else {
         console.warn("Already on the first slide.");
       }
@@ -203,6 +205,7 @@ const setupNavigation = (swiper) => {
     });
   });
 };
+
 
 // Wait for Swiper instance to be ready
 waitForSwiper();
